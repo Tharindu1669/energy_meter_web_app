@@ -3,6 +3,8 @@ import datetime
 import calendar
 import pandas as pd
 import time
+from fastapi import FastAPI
+
 
 mydb = mysql.connector.connect(
   host="localhost",

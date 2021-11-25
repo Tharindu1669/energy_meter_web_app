@@ -3,7 +3,6 @@ import datetime
 import calendar
 import pandas as pd
 import time
-from __future__ import division
 
 mydb = mysql.connector.connect(
   host="localhost",

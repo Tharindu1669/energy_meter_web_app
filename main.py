@@ -21,6 +21,7 @@ async def root(phase_1,phase_2,phase_3,voltage,powerPh1,powerPh2,powerPh3, delta
 
 	mycursor1 = mydb.cursor()
 	mycursor2 = mydb.cursor()
+	mycursor3 = mydb.cursor()
 
 	unixtime = datetime.datetime.utcnow()
 	sql1 = "INSERT INTO realtime_consumption (phase_1, phase_2, phase_3, voltage, powerPh1, powerPh2, powerPh3, time) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
@@ -32,12 +33,37 @@ async def root(phase_1,phase_2,phase_3,voltage,powerPh1,powerPh2,powerPh3, delta
 	energyPh2 = float(powerPh2) * float(deltaTime)
 	energyPh3 = float(powerPh3) * float(deltaTime)
 	totalEnergy = energyPh1 + energyPh2 + energyPh3
-	sql2 = "INSERT INTO energy_consumption (time, EnergyPhase1, EnergyPhase2, EnergyPhase3, TotalEnergy) VALUES (%s, %s, %s, %s, %s)"
-	val2 = (unixtime, energyPh1, energyPh2, energyPh3, totalEnergy )
+	
+	
+        sql_select_query = """SELECT COUNT(EnergyPhase1) FROM energy_consumption"""
+        mycursor3.execute(sql_select_query)
+        phase1_record = mycursor3.fetchall()
 
+        phase1_previous_energy = phase1_record[0][0]
+	phase1_new_energy = float(phase1_previous_energy) + (energyPh1)
+
+	sql_select_query = """SELECT COUNT(EnergyPhase1) FROM energy_consumption"""
+        mycursor3.execute(sql_select_query)
+        phase2_record = mycursor3.fetchall()
+
+        phase2_previous_energy = phase2_record[0][0]
+	phase2_new_energy = float(phase2_previous_energy) + (energyPh2)
+
+	sql_select_query = """SELECT COUNT(EnergyPhase1) FROM energy_consumption"""
+        mycursor3.execute(sql_select_query)
+        phase3_record = mycursor3.fetchall()
+
+        phase3_previous_energy = phase3_record[0][0]
+	phase3_new_energy = float(phase3_previous_energy) + (energyPh3)
+	
+	sql2 = "INSERT INTO energy_consumption (time, EnergyPhase1, EnergyPhase2, EnergyPhase3, TotalEnergy) VALUES (%s, %s, %s, %s, %s)"
+	val2 = (unixtime, phase1_new_energy, phase2_new_energy, phase3_new_energy, totalEnergy )
+
+	
 	mycursor1.execute(sql1, val1)
 	time.sleep(0.5)
 	mycursor2.execute(sql2, val2)
-	previousTime = datetime.datetime.utcnow()
+	
+	
 	mydb.commit()
 	return {"message": "Success"}

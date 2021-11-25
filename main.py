@@ -36,6 +36,7 @@ async def root(phase_1,phase_2,phase_3,voltage,powerPh1,powerPh2,powerPh3, delta
 	val2 = (unixtime, energyPh1, energyPh2, energyPh3, totalEnergy )
 
 	mycursor1.execute(sql1, val1)
+	time.sleep(0.5)
 	mycursor2.execute(sql2, val2)
 	previousTime = datetime.datetime.utcnow()
 	mydb.commit()

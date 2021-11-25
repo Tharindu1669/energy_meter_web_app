@@ -22,7 +22,9 @@ async def root(phase_1,phase_2,phase_3,voltage,powerPh1,powerPh2,powerPh3, delta
 	mycursor1 = mydb.cursor()
 	mycursor2 = mydb.cursor()
 	mycursor3 = mydb.cursor()
-
+	mycursor4 = mydb.cursor()
+	mycursor5 = mydb.cursor()
+	
 	unixtime = datetime.datetime.utcnow()
 	sql1 = "INSERT INTO realtime_consumption (phase_1, phase_2, phase_3, voltage, powerPh1, powerPh2, powerPh3, time) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
 	val1 = (phase_1, phase_2, phase_3,voltage,powerPh1,powerPh2,powerPh3, unixtime)
@@ -39,13 +41,13 @@ async def root(phase_1,phase_2,phase_3,voltage,powerPh1,powerPh2,powerPh3, delta
 	phase1_new_energy = float(phase1_previous_energy) + (energyPh1)
 	
 	mycursor3.execute("SELECT SUM(EnergyPhase2) FROM energy_consumption")
-	phase2_record = mycursor3.fetchall(sql_select_query)
+	phase2_record = mycursor4.fetchall(sql_select_query)
 	
 	phase2_previous_energy = phase2_record[0][0]
 	phase2_new_energy = float(phase2_previous_energy) + (energyPh2)
 	
 	mycursor3.execute("SELECT SUM(EnergyPhase2) FROM energy_consumption")
-	phase3_record = mycursor3.fetchall(sql_select_query)
+	phase3_record = mycursor5.fetchall(sql_select_query)
 	
 	phase3_previous_energy = phase3_record[0][0]
 	phase3_new_energy = float(phase3_previous_energy) + (energyPh3)

@@ -43,7 +43,7 @@ async def root(phase_1,phase_2,phase_3,voltage,powerPh1,powerPh2,powerPh3, delta
 		phase1_previous_energy = 0
 	phase1_new_energy = float(phase1_previous_energy) + (energyPh1)
 	
-	mycursor4.execute("SELECT SUM(EnergyPhase1) FROM energy_consumption")
+	mycursor4.execute("SELECT SUM(EnergyPhase2) FROM energy_consumption")
 	phase2_record = mycursor4.fetchall()
 	
 	phase2_previous_energy = phase2_record[0][0]
@@ -51,7 +51,7 @@ async def root(phase_1,phase_2,phase_3,voltage,powerPh1,powerPh2,powerPh3, delta
 		phase2_previous_energy = 0
 	phase2_new_energy = float(phase2_previous_energy) + (energyPh2)
 	
-	mycursor5.execute("SELECT SUM(EnergyPhase1) FROM energy_consumption")
+	mycursor5.execute("SELECT SUM(EnergyPhase3) FROM energy_consumption")
 	phase3_record = mycursor5.fetchall()
 	
 	phase3_previous_energy = phase3_record[0][0]

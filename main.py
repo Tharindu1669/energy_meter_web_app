@@ -32,7 +32,7 @@ async def root(phase_1,phase_2,phase_3,voltage,powerPh1,powerPh2,powerPh3, delta
 	energyPh2 = float(powerPh2) * float(deltaTime)
 	energyPh3 = float(powerPh3) * float(deltaTime)
 	totalEnergy = energyPh1 + energyPh2 + energyPh3
-	sql2 = "INSERT INTO energy_consumption (time, EnergyPhase1, EnergyPhase2, EnergyPhase3, TotalEnergy) VALUES (%s, %s, %s, %s, %s, %s)"
+	sql2 = "INSERT INTO energy_consumption (time, EnergyPhase1, EnergyPhase2, EnergyPhase3, TotalEnergy) VALUES (%s, %s, %s, %s, %s)"
 	val2 = (unixtime, energyPh1, energyPh2, energyPh3, totalEnergy )
 
 	mycursor1.execute(sql1, val1)

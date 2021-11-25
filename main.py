@@ -33,22 +33,22 @@ async def root(phase_1,phase_2,phase_3,voltage,powerPh1,powerPh2,powerPh3, delta
 	totalEnergy = energyPh1 + energyPh2 + energyPh3
 	
 	sql_select_query = "SELECT SUM(EnergyPhase1) FROM energy_consumption"
-	mycursor3.execute(sql_select_query)
-	phase1_record = mycursor3.fetchall()
+	#mycursor3.execute(sql_select_query)
+	phase1_record = mycursor3.fetchall(sql_select_query)
 	
 	phase1_previous_energy = phase1_record[0][0]
 	phase1_new_energy = float(phase1_previous_energy) + (energyPh1)
 	
 	sql_select_query = "SELECT SUM(EnergyPhase1) FROM energy_consumption"
-	mycursor3.execute(sql_select_query)
-	phase2_record = mycursor3.fetchall()
+	#mycursor3.execute(sql_select_query)
+	phase2_record = mycursor3.fetchall(sql_select_query)
 	
 	phase2_previous_energy = phase2_record[0][0]
 	phase2_new_energy = float(phase2_previous_energy) + (energyPh2)
 	
 	sql_select_query = "SELECT SUM(EnergyPhase1) FROM energy_consumption"
-	mycursor3.execute(sql_select_query)
-	phase3_record = mycursor3.fetchall()
+	#mycursor3.execute(sql_select_query)
+	phase3_record = mycursor3.fetchall(sql_select_query)
 	
 	phase3_previous_energy = phase3_record[0][0]
 	phase3_new_energy = float(phase3_previous_energy) + (energyPh3)

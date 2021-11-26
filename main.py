@@ -25,9 +25,9 @@ async def root(phase_1,phase_2,phase_3,voltage,powerPh1,powerPh2,powerPh3, delta
 	mycursor4 = mydb.cursor()
 	mycursor5 = mydb.cursor()
 	
-	phase_1/=1000.0
-	phase_2/=1000.0
-	phase_3/=1000.0
+	phase_1 = float(phase_1) / 1000.0
+	phase_2 = float(phase_2) / 1000.0
+	phase_3 = float(phase_3) / 1000.0
 	
 	print(phase_1)
 	print(phase_2)

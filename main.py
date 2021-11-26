@@ -14,7 +14,8 @@ mydb = mysql.connector.connect(
 )
 
 app = FastAPI()
-unixtime = 0;
+unixtime = 0
+cost =0
 
 @app.get("/")
 async def root(phase_1,phase_2,phase_3,voltage,powerPh1,powerPh2,powerPh3, deltaTime):
@@ -24,6 +25,8 @@ async def root(phase_1,phase_2,phase_3,voltage,powerPh1,powerPh2,powerPh3, delta
 	mycursor3 = mydb.cursor()
 	mycursor4 = mydb.cursor()
 	mycursor5 = mydb.cursor()
+	mycursor6 = mydb.cursor()
+	mycursor7 = mydb.cursor()
 	
 	phase_1 = float(phase_1) / 1000.0
 	phase_2 = float(phase_2) / 1000.0
@@ -73,12 +76,32 @@ async def root(phase_1,phase_2,phase_3,voltage,powerPh1,powerPh2,powerPh3, delta
 	phase3_new_energy = phase3_new_energy / 3600
 	totalEnergy = phase1_new_energy + phase2_new_energy + phase3_new_energy
 	
+	if unixtime.time() > datetime.time(13, 0, 0, 0)  and unixtime.time() < datetime.time(16, 59, 59, 0):
+		cost = totalEnergy * 26 / 1000
+	
+	if unixtime.time() > datetime.time(17, 0, 0, 0)  and unixtime.time() < datetime.time(23, 59, 59, 0):
+		cost = totalEnergy * 15.4 / 1000
+		
+	if unixtime.time() > datetime.time(0, 0, 0, 0)  and unixtime.time() < datetime.time(12, 59, 59, 0):
+		cost = totalEnergy * 21.8 / 1000
+	
+	mycursor6.execute("SELECT SUM(EnergyPhase3) FROM tariff_table")
+	tariff_record = mycursor6.fetchall()
+	
+	total_previous_tariff = tariff_record[0][0]
+	if total_previous_tariff == None:
+		total_previous_tariff = 0
+	total_new_tariff = float(total_previous_tariff) + (cost)
 	
 	sql2 = "INSERT INTO energy_consumption (time, EnergyPhase1, EnergyPhase2, EnergyPhase3, TotalEnergy) VALUES (%s, %s, %s, %s, %s)"
 	val2 = (unixtime, phase1_new_energy, phase2_new_energy, phase3_new_energy, totalEnergy )
 	
+	sql3 = "INSERT INTO tariff_table(time, tariff) VALUES (%s, %s)"
+	val3 = (unixtime, total_new_tariff)
+	
 	mycursor1.execute(sql1, val1)
 	mycursor2.execute(sql2, val2)
+	mycursor7.execute(sql3, val3)
 	
 	
 	mydb.commit()

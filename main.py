@@ -32,10 +32,6 @@ async def root(phase_1,phase_2,phase_3,voltage,powerPh1,powerPh2,powerPh3, delta
 	phase_2 = float(phase_2) / 1000.0
 	phase_3 = float(phase_3) / 1000.0
 	
-	print(phase_1)
-	print(phase_2)
-	print(phase_3)
-	
 	unixtime = datetime.datetime.utcnow()
 	sql1 = "INSERT INTO realtime_consumption (phase_1, phase_2, phase_3, voltage, powerPh1, powerPh2, powerPh3, time) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
 	val1 = (phase_1, phase_2, phase_3,voltage,powerPh1,powerPh2,powerPh3, unixtime)
@@ -65,6 +61,7 @@ async def root(phase_1,phase_2,phase_3,voltage,powerPh1,powerPh2,powerPh3, delta
 	phase3_record = mycursor5.fetchall()
 	
 	phase3_previous_energy = phase3_record[0][0]
+	print(phase3_record[0][0])
 	if phase3_previous_energy == None:
 		phase3_previous_energy = 0
 	phase3_new_energy = float(phase3_previous_energy) + (energyPh3)
@@ -89,6 +86,7 @@ async def root(phase_1,phase_2,phase_3,voltage,powerPh1,powerPh2,powerPh3, delta
 	tariff_record = mycursor6.fetchall()
 	
 	total_previous_tariff = tariff_record[0][0]
+	print(tariff_record[0])
 	if total_previous_tariff == None:
 		total_previous_tariff = 0
 	total_new_tariff = float(total_previous_tariff) + (cost)

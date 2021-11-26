@@ -85,8 +85,8 @@ async def root(phase_1,phase_2,phase_3,voltage,powerPh1,powerPh2,powerPh3, delta
 	mycursor6.execute("select tariff from db_kettle_mode.tariff_table WHERE id=(SELECT max(id) FROM db_kettle_mode.tariff_table);")
 	tariff_record = mycursor6.fetchall()
 	
-	total_previous_tariff = tariff_record
-	print(tariff_record)
+	total_previous_tariff = tariff_record[0][0]
+	print(tariff_record[0][0])
 	if total_previous_tariff == None:
 		total_previous_tariff = 0
 	total_new_tariff = float(total_previous_tariff) + (cost)

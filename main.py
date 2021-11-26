@@ -40,7 +40,6 @@ async def root(phase_1,phase_2,phase_3,voltage,powerPh1,powerPh2,powerPh3, delta
 	energyPh1 = float(powerPh1) * float(deltaTime)
 	energyPh2 = float(powerPh2) * float(deltaTime)
 	energyPh3 = float(powerPh3) * float(deltaTime)
-	totalEnergy = energyPh1 + energyPh2 + energyPh3
 	
 	
 	mycursor3.execute("SELECT SUM(EnergyPhase1) FROM energy_consumption")
@@ -69,10 +68,11 @@ async def root(phase_1,phase_2,phase_3,voltage,powerPh1,powerPh2,powerPh3, delta
 	
 	totalEnergy = phase1_new_energy + phase2_new_energy + phase3_new_energy
 	
-	totalEnergy = totalEnergy / 3600
 	phase1_new_energy = phase1_new_energy / 3600
 	phase2_new_energy = phase2_new_energy / 3600
 	phase3_new_energy = phase3_new_energy / 3600
+	totalEnergy = phase1_new_energy + phase2_new_energy + phase3_new_energy
+	
 	
 	sql2 = "INSERT INTO energy_consumption (time, EnergyPhase1, EnergyPhase2, EnergyPhase3, TotalEnergy) VALUES (%s, %s, %s, %s, %s)"
 	val2 = (unixtime, phase1_new_energy, phase2_new_energy, phase3_new_energy, totalEnergy )

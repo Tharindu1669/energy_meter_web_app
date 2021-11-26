@@ -71,7 +71,7 @@ async def root(phase_1,phase_2,phase_3,voltage,powerPh1,powerPh2,powerPh3, delta
 	
 	totalEnergy = totalEnergy / 3600
 	phase1_new_energy = phase1_new_energy / 3600
-	phase2_new_energy = phase1_new_energy / 3600
+	phase2_new_energy = phase2_new_energy / 3600
 	phase3_new_energy = phase3_new_energy / 3600
 	
 	sql2 = "INSERT INTO energy_consumption (time, EnergyPhase1, EnergyPhase2, EnergyPhase3, TotalEnergy) VALUES (%s, %s, %s, %s, %s)"

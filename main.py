@@ -69,7 +69,7 @@ async def root(phase_1,phase_2,phase_3,voltage,powerPh1,powerPh2,powerPh3, delta
 	
 	totalEnergy = phase1_new_energy + phase2_new_energy + phase3_new_energy
 	
-	totalEnergy = totalEnergy / 1000* 3600
+	totalEnergy = totalEnergy / 3600
 	phase1_new_energy = phase1_new_energy / 3600
 	phase2_new_energy = phase1_new_energy / 3600
 	phase3_new_energy = phase3_new_energy / 3600

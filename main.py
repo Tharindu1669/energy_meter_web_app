@@ -84,11 +84,14 @@ async def root(phase_1,phase_2,phase_3,voltage,powerPh1,powerPh2,powerPh3, delta
 	
 	mycursor6.execute("select tariff from tariff_table WHERE id=(SELECT max(id) FROM tariff_table)")
 	tariff_record = mycursor6.fetchall()
-	print(tariff_record)
-	
-	total_previous_tariff = tariff_record[0][0]
-	if total_previous_tariff == None:
+	if len(tariff_record) == 0:
 		total_previous_tariff = 0
+	else:
+		total_previous_tariff = tariff_record[0][0]
+	
+	
+# 	if total_previous_tariff == None:
+# 		total_previous_tariff = 0
 	total_new_tariff = float(total_previous_tariff) + (cost)
 	
 	sql2 = "INSERT INTO energy_consumption (time, EnergyPhase1, EnergyPhase2, EnergyPhase3, TotalEnergy) VALUES (%s, %s, %s, %s, %s)"

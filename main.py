@@ -85,7 +85,7 @@ async def root(phase_1,phase_2,phase_3,voltage,powerPh1,powerPh2,powerPh3, delta
 	if unixtime.time() > datetime.time(0, 0, 0, 0)  and unixtime.time() < datetime.time(12, 59, 59, 0):
 		cost = totalEnergy * 21.8 / 1000
 	
-	mycursor6.execute("SELECT SUM(EnergyPhase3) FROM tariff_table")
+	mycursor6.execute("select tariff from db_kettle_mode.tariff_table WHERE id=(SELECT max(id) FROM db_kettle_mode.tariff_table);")
 	tariff_record = mycursor6.fetchall()
 	
 	total_previous_tariff = tariff_record[0][0]

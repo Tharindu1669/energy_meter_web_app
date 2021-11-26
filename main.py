@@ -61,7 +61,7 @@ async def root(phase_1,phase_2,phase_3,voltage,powerPh1,powerPh2,powerPh3, delta
 	phase3_record = mycursor5.fetchall()
 	
 	phase3_previous_energy = phase3_record[0][0]
-	print(phase3_record[0][0])
+	print(phase3_record)
 	if phase3_previous_energy == None:
 		phase3_previous_energy = 0
 	phase3_new_energy = float(phase3_previous_energy) + (energyPh3)
@@ -84,9 +84,9 @@ async def root(phase_1,phase_2,phase_3,voltage,powerPh1,powerPh2,powerPh3, delta
 	
 	mycursor6.execute("select tariff from tariff_table WHERE id=(SELECT max(id) FROM tariff_table)")
 	tariff_record = mycursor6.fetchall()
+	print(tariff_record)
 	
 	total_previous_tariff = tariff_record[0][0]
-	print(tariff_record[0][0])
 	if total_previous_tariff == None:
 		total_previous_tariff = 0
 	total_new_tariff = float(total_previous_tariff) + (cost)

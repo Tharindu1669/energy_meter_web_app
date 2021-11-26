@@ -29,6 +29,10 @@ async def root(phase_1,phase_2,phase_3,voltage,powerPh1,powerPh2,powerPh3, delta
 	sql1 = "INSERT INTO realtime_consumption (phase_1, phase_2, phase_3, voltage, powerPh1, powerPh2, powerPh3, time) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
 	val1 = (phase_1, phase_2, phase_3,voltage,powerPh1,powerPh2,powerPh3, unixtime)
 	
+	print(phase_1)
+	print(phase_2)
+	print(phase_3)
+	
 	energyPh1 = float(powerPh1) * float(deltaTime)
 	energyPh2 = float(powerPh2) * float(deltaTime)
 	energyPh3 = float(powerPh3) * float(deltaTime)
